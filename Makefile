@@ -1,4 +1,4 @@
-#Start minikube
+# Start minikube
 .PHONY: minikube_start
 minikube_start:
 	@minikube start
@@ -37,6 +37,6 @@ deploy_sai: build_sai
 	@kubectl -n sai apply -f sai/deploy/service.yaml
 
 
-#Deploy all
+# Deploy all
 .PHONY: deploy_all
 deploy_all: deploy_calvin deploy_sai
