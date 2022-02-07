@@ -3,22 +3,23 @@
 minikube_start:
 	@minikube start
 
-#Stop minikube
+# Stop minikube
 .PHONY: minikube_delete
 minikube_delete:
 	@minikube delete
 
-#Build calvin
+# Build calvin
 .PHONY: build_calvin
 build_calvin:
 	@docker build -t calvin:latest -f calvin/Dockerfile .
 
-#Build sai
+# Build sai
 .PHONY: build_sai
 build_sai:
 	@docker build -t sai:latest -f sai/Dockerfile .
 
-#Deploy calvin
+# Deploy calvin
+# Need to delete deployment because we use the latest tag & k8s wont see a difference in the deployment if we just update the code
 .PHONY: deploy_calvin
 deploy_calvin: build_calvin
 	@kubectl -n calvin delete deployment calvin
@@ -26,7 +27,8 @@ deploy_calvin: build_calvin
 	@kubectl -n calvin apply -f calvin/deploy/deployment.yaml
 	@kubectl -n calvin apply -f calvin/deploy/service.yaml
 
-#Deploy sai
+# Deploy calvin
+# Need to delete deployment because we use the latest tag & k8s wont see a difference in the deployment if we just update the code
 .PHONY: deploy_sai
 deploy_sai: build_sai
 	@kubectl -n sai delete deployment sai
