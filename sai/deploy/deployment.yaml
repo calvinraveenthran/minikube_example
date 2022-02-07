@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sai
+  labels:
+    app: sai
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sai
+  template:
+    metadata:
+      labels:
+        app: sai
+    spec:
+      containers:
+      - name: sai
+        image: sai:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: sai
+                key: username
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sai
+                key: password

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calvin
+  labels:
+    app: calvin
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: calvin
+  template:
+    metadata:
+      labels:
+        app: calvin
+    spec:
+      containers:
+      - name: calvin
+        image: calvin:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: calvin
+                key: username
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: calvin
+                key: password
